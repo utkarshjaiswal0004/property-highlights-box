@@ -8,6 +8,10 @@ This project is a property highlights box developed with **Next.js** for the fro
 - Auto-save on edits, sorting, or deletion
 - Fetches saved data on load
 
+
+### Loom video URL: 
+https://www.loom.com/share/d491d10a8ff04663a045b0af8e2261cd?sid=286c40d4-753e-4889-b8f6-5e4599f07ec9
+
 ## Getting Started
 
 ### Development Setup
@@ -77,6 +81,3 @@ A Loom video demonstrating the following functionalities:
 1. Adding, editing, deleting, and reordering highlights
 2. Auto-saving of changes
 3. Fetching data on load
-
-### Loom video URL: 
-https://www.loom.com/share/d491d10a8ff04663a045b0af8e2261cd?sid=286c40d4-753e-4889-b8f6-5e4599f07ec9
