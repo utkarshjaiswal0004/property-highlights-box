@@ -1,7 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { RiDeleteBinLine } from "react-icons/ri";
 import styles from "../app/page.module.css";
+import InputField from "./InputField";
+import DragHandle from "./DragHandle";
 
 interface Highlight {
   _id: string;
@@ -24,7 +26,6 @@ const HighlightRow: React.FC<HighlightRowProps> = ({
   deleteHighlight,
 }) => {
   const ref = useRef<HTMLDivElement | null>(null);
-  const [localText, setLocalText] = useState(highlight.info || ""); // Local state for input
 
   const [, drag] = useDrag({
     type: "HIGHLIGHT",
@@ -34,38 +35,20 @@ const HighlightRow: React.FC<HighlightRowProps> = ({
   const [, drop] = useDrop({
     accept: "HIGHLIGHT",
     hover: (item: { index: number }) => {
-      if (item.index !== index) {
-        moveHighlight(item.index, index);
-        item.index = index;
-      }
+      if (!ref.current || item.index === index) return;
+      moveHighlight(item.index, index);
+      item.index = index;
     },
   });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newText = e.target.value;
-    setLocalText(newText); // Update local state immediately
-    updateHighlight(highlight._id, newText); // Call the debounced update function
-  };
-
-  // This effect ensures that when highlight info changes, localText is updated
-  React.useEffect(() => {
-    setLocalText(highlight.info || "");
-  }, [highlight.info]);
 
   drag(drop(ref));
 
   return (
     <div ref={ref} className={styles.row}>
-      <span className={styles.dragHandle}>⋮⋮</span>
-      <input
-        className={styles.input}
-        value={localText} // Use local state for input value
-        onChange={handleChange}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            e.preventDefault(); // Prevent form submission if needed
-          }
-        }}
+      <DragHandle />
+      <InputField
+        value={highlight.info}
+        onChange={(value) => updateHighlight(highlight._id, value)}
       />
       <button
         className={styles.deleteButton}

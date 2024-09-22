@@ -1,11 +1,9 @@
-const Highlight = require("../models/highlight");
+const highlightService = require("../services/highlightService");
 
-// Create a new highlight
 const createHighlight = async (req, res) => {
   try {
     const { info, sequence } = req.body;
-    const newHighlight = new Highlight({ info, sequence });
-    await newHighlight.save();
+    const newHighlight = await highlightService.createHighlight(info, sequence);
     res.status(201).json(newHighlight);
   } catch (error) {
     console.log(error);
@@ -13,25 +11,22 @@ const createHighlight = async (req, res) => {
   }
 };
 
-// Get all highlights
 const getHighlights = async (req, res) => {
   try {
-    const highlights = await Highlight.find().sort({ sequence: 1 });
+    const highlights = await highlightService.getHighlights();
     res.json(highlights);
   } catch (error) {
     res.status(500).json({ message: "Error fetching highlights", error });
   }
 };
 
-// Update a highlight
 const updateHighlight = async (req, res) => {
   try {
-    const { info, sequence } = req.body;
-    console.log("Updating highlight:", req.params.id, "with data:", req.body);
-    const updatedHighlight = await Highlight.findByIdAndUpdate(
-      req.params.id,
-      { info, sequence },
-      { new: true }
+    const { info } = req.body;
+    const highlightId = req.params.id;
+    const updatedHighlight = await highlightService.updateHighlight(
+      highlightId,
+      info
     );
 
     if (!updatedHighlight) {
@@ -44,21 +39,16 @@ const updateHighlight = async (req, res) => {
     res.status(400).json({ message: "Error updating highlight", error });
   }
 };
+
 const reorderHighlights = async (req, res) => {
   const { highlightIds } = req.body;
 
-  // Check if highlightIds is a valid array
   if (!Array.isArray(highlightIds) || highlightIds.length === 0) {
     return res.status(400).json({ error: "Invalid highlight IDs" });
   }
 
   try {
-    // Update each highlight's sequence
-    await Promise.all(
-      highlightIds.map((id, index) =>
-        Highlight.findByIdAndUpdate(id, { sequence: index + 1 }, { new: true })
-      )
-    );
+    await highlightService.reorderHighlights(highlightIds);
     res.status(200).json({ message: "Highlights reordered successfully" });
   } catch (error) {
     console.error("Error reordering highlights:", error);
@@ -66,10 +56,9 @@ const reorderHighlights = async (req, res) => {
   }
 };
 
-// Delete a highlight
 const deleteHighlight = async (req, res) => {
   try {
-    await Highlight.findByIdAndDelete(req.params.id);
+    await highlightService.deleteHighlight(req.params.id);
     res.sendStatus(204);
   } catch (error) {
     res.status(500).json({ message: "Error deleting highlight", error });

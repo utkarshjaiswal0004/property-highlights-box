@@ -8,10 +8,11 @@ const {
   reorderHighlights,
 } = require("../controllers/highlight-controller");
 
+// Define the reorder route before the update route
+router.put("/reorder", reorderHighlights);
 router.post("/", createHighlight);
 router.get("/", getHighlights);
 router.put("/:id", updateHighlight);
-router.put("/reorder", reorderHighlights);
 router.delete("/:id", deleteHighlight);
 
 module.exports = router;

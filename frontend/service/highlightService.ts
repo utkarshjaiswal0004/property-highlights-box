@@ -2,7 +2,6 @@ import axios from 'axios';
 
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/highlight`;
 
-// Create a new highlight
 export const createHighlight = async (info: string, sequence: number) => {
   try {
     const response = await axios.post(API_URL, { info, sequence });
@@ -13,10 +12,9 @@ export const createHighlight = async (info: string, sequence: number) => {
   }
 };
 
-// Get all highlights
 export const getHighlights = async () => {
   try {
-      const response = await axios.get(API_URL);
+    const response = await axios.get(API_URL);
     return response.data;
   } catch (error) {
     console.error("Error fetching highlights:", error);
@@ -24,30 +22,27 @@ export const getHighlights = async () => {
   }
 };
 
-// Update a highlight
-export const updateHighlight = async (id: string, info: string, sequence: number) => {
-    try {
-      const response = await axios.put(`${API_URL}/${id}`, { info, sequence });
-      return response.data; // Ensure the response has the updated highlight
-    } catch (error) {
-      console.error("Error updating highlight:", error);
-      throw error;
-    }
-  };
-  
+export const updateHighlight = async (id: string, info: string) => {
+  try {
+    const response = await axios.put(`${API_URL}/${id}`, { info });
+    return response.data;
+  } catch (error) {
+    console.error("Error updating highlight:", error);
+    throw error;
+  }
+};
 
-
-// Reorder highlights
 export const reorderHighlights = async (highlightIds: string[]) => {
   try {
+    console.log("tried calling reorder");
     // Make sure to wrap the highlightIds array in an object
-    await axios.put(`${API_URL}/reorder`, { highlightIds: highlightIds });
+    await axios.put(`${API_URL}/reorder`, { highlightIds });
   } catch (error) {
     console.error("Error reordering highlights:", error);
     throw error;
   }
 };
-// Delete a highlight
+
 export const deleteHighlight = async (id: string) => {
   try {
     await axios.delete(`${API_URL}/${id}`);
@@ -56,4 +51,3 @@ export const deleteHighlight = async (id: string) => {
     throw error;
   }
 };
-
