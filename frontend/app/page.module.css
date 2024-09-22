@@ -1,0 +1,89 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  min-height: 100vh;
+  justify-content: center;
+}
+
+.containerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 20px;
+}
+
+.containerHeader h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #7261ff;
+  margin-right: 10px;
+}
+
+.infoIcon {
+  margin-left: 3px;
+  font-size: 1rem;
+  color: gray;
+}
+
+.addButton {
+  background-color: #7261ff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.addButton:hover {
+  background-color: #554fb8;
+}
+
+.highlightsList {
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 10px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  padding: 22px 10px;
+  border: 1px solid #e1e1e1;
+  border-radius: 1px;
+  background-color: white;
+}
+
+.dragHandle {
+  cursor: move;
+  margin-right: 15px;
+  font-size: 1.5rem;
+  color: #808080;
+}
+
+.input {
+  flex-grow: 1;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-right: 10px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #808080;
+  font-size: 1.5rem;
+}
+
+.deleteButton:hover {
+  color: #ff6b6b;
+  background-color: transparent;
+}
